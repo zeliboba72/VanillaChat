@@ -19,17 +19,9 @@
     </div>
     <div class="chat__main">
         <ul class="chat__messages js-messages">
-            <li class="chat__messages-item message">
-                <div class="message__info">
-                    Вы, 26.04.2022
-                </div>
-                <div class="message__text">
-                    Привет!
-                </div>
-            </li>
         </ul>
         <form class="chat__form js-chat-form">
-            <input name="message" class="chat__input app-input js-chat-input" placeholder="Введите сообщение..." />
+            <input required name="message" class="chat__input app-input js-chat-input" placeholder="Введите сообщение..." />
         </form>
     </div>
 </div>
@@ -40,7 +32,7 @@
                 <h2 class="auth-form__title app-title">
                     Выберите псевдоним
                 </h2>
-                <input name="name" class="auth-form__input app-input">
+                <input required name="name" class="auth-form__input app-input">
                 <button class="auth-form__button app-button" type="submit">
                     Продолжить
                 </button>

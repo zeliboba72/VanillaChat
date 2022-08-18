@@ -1,20 +1,13 @@
 import './style/index.scss';
-import { io } from 'socket.io-client';
+import SocketClient from './api/SocketClient';
 import AuthPopup from './components/AuthPopup';
+import Chat from './components/Chat';
 
 const authPopup = new AuthPopup();
-authPopup.open().then(token => {
-  const socket = io('ws://ahj-chat-socket.herokuapp.com', {
-    reconnectionDelayMax: 10000,
-    auth: {
-      token,
-    },
-  });
-  socket.open(err => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('GOOOD!!!');
-    }
-  });
+authPopup.open().then(({ token, name }) => {
+  const chat = new Chat(name);
+  const socket = new SocketClient(token);
+  socket.addSubscriberMessage(chat.addMessage.bind(chat));
+  chat.addSubscriberForm(socket.sendMessage.bind(socket));
+  chat.open();
 });

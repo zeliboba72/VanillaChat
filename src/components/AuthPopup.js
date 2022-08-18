@@ -19,7 +19,10 @@ export default class AuthPopup extends Popup {
       );
       return;
     }
-    this.close(response.token);
+    this.close({
+      token: response.token,
+      name,
+    });
   }
 
   createError(message) {
@@ -38,8 +41,8 @@ export default class AuthPopup extends Popup {
     });
   }
 
-  close(token) {
+  close(user) {
     super.close();
-    this.resolve(token);
+    this.resolve(user);
   }
 }
