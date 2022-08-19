@@ -2,18 +2,34 @@ import formatTimestamp from '../utils/format-timestamp';
 
 export default class Chat {
   constructor(currentUser) {
+    this.currentUser = currentUser;
+
     this.chatNode = document.querySelector('.js-chat');
-    this.usersListNode = document.querySelector('.js-users-list');
+    this.usersNode = document.querySelector('.js-users-list');
     this.messagesNode = document.querySelector('.js-messages');
     this.formNode = document.querySelector('.js-chat-form');
+
     this.messages = [];
-    this.currentUser = currentUser;
+    this.users = [];
     this.subscribersForm = new Set();
+
     this.formNode.addEventListener('submit', this.submit.bind(this));
   }
 
   open() {
     this.chatNode.classList.add('chat--active');
+    this.renderUsers();
+    this.renderMessages();
+  }
+
+  addUser({ users }) {
+    this.users = users;
+    this.renderUsers();
+  }
+
+  removeUser(removedUser) {
+    this.users = this.users.filter(user => user !== removedUser);
+    this.renderUsers();
   }
 
   addMessage(message) {
@@ -23,6 +39,19 @@ export default class Chat {
       currentUser,
     });
     this.renderMessages();
+  }
+
+  renderUsers() {
+    const usersHtml = this.users.map(
+      username => `<li class="users-list__item user">
+                <div class="user__avatar">
+                </div>
+                <div class="user__name">
+                    ${username}${this.currentUser === username ? ' (Вы)' : ''}
+                </div>
+            </li>`
+    );
+    this.usersNode.innerHTML = usersHtml.join('');
   }
 
   renderMessages() {

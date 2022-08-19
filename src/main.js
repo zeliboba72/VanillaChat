@@ -8,6 +8,8 @@ authPopup.open().then(({ token, name }) => {
   const chat = new Chat(name);
   const socket = new SocketClient(token);
   socket.addSubscriberMessage(chat.addMessage.bind(chat));
+  socket.addSubscriberLogin(chat.addUser.bind(chat));
+  socket.addSubscriberDisconnect(chat.removeUser.bind(chat));
   chat.addSubscriberForm(socket.sendMessage.bind(socket));
   chat.open();
 });
