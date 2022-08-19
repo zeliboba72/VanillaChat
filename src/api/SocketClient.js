@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 
 export default class SocketClient {
   constructor(token) {
-    this.socket = io('ws://ahj-chat-socket.herokuapp.com', {
+    this.socket = io('wss://ahj-chat-socket.herokuapp.com', {
       reconnectionDelayMax: 10000,
       auth: {
         token,
